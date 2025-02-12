@@ -1,6 +1,6 @@
 @import "primeicons/primeicons.css"; /* PrimeIcons should be first */
 @import "primeng/resources/primeng.css"; /* PrimeNG component styles */
-@import "primeng/resources/themes/lara-light-blue/theme.css"; /* Theme styles */
+@import "primeng/resources/themes/lara-light-purple/theme.css"; /* Theme styles */
 @import 'include-media';
 $breakpoints: (
   'phone': 460px,
@@ -12,4 +12,32 @@ body {
   margin: 0;
   padding: 0;
   background-color: whitesmoke;
+}
+
+p-progressSpinner {
+  z-index: 5;
+}
+
+p-button .p-button {
+  transition: none;
+  min-width: 110px;
+}
+
+p-password .p-password, p-password input {
+  margin: auto;
+  width: 100%;
+  font-family: "Host Grotesk", serif;
+}
+
+.p-dropdown {
+  width: 100%;
+}
+
+input,
+textarea,
+.p-checkbox .p-checkbox-box,
+.p-button,
+.p-dropdown,
+.p-dialog .p-dialog-header .p-dialog-header-icon {
+  box-shadow: none;
 }
