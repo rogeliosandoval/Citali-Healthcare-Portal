@@ -1,0 +1,63 @@
+@import 'include-media';
+$breakpoints: (
+  'phone': 460px,
+  'tablet': 768px,
+  'desktop': 1024px
+);
+$theme-color-main: #004aad;
+$theme-color-main-light: #37b6ff;
+
+.phone-break {
+  display: none;
+
+  @include media('<phone') {
+    display: block;
+  }
+}
+
+.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.float {
+  animation: float 2s ease-in-out infinite;
+}
+
+.route-container {
+  width: calc(100vw - 280px);
+  height: 100%;
+  padding: 25px;
+  overflow: auto;
+  animation: routeAnimation 0.2s linear;
+
+  @media screen and (max-width: 1000px) {
+    width: 100%;
+    padding: 25px 15px;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeInAndSlideInBottom {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInAndSlideInTop {
+  0% { opacity: 0; transform: translateY(-30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes routeAnimation {
+  0% { opacity: 0; transform: scale(0.8) }
+  100% { opacity: 1; transform:scale(1) }
+}
