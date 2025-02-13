@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'citali-healthcare-database' title`, () => {
+  it(`should have the 'citali-healthcare-portal' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('citali-healthcare-database');
+    expect(app.title).toEqual('citali-healthcare-portal');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, citali-healthcare-database');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, citali-healthcare-portal');
   });
 });
