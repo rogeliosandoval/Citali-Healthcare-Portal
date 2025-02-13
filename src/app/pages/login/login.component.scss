@@ -7,7 +7,7 @@ $breakpoints: variables.$breakpoints;
   justify-content: center;
   align-items: center;
   gap: 100px;
-  min-height: 100vh;
+  min-height: 80vh;
   animation: fadeIn 0.2s linear;
 
   @include media('<phone') {
@@ -28,7 +28,7 @@ $breakpoints: variables.$breakpoints;
   background-color: rgb(234, 234, 234);
   gap: 20px;
   padding: 35px;
-  border-radius: 15px;
+  border-radius: 5px;
   -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.1);
   -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.1);
   box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.1);
@@ -105,4 +105,48 @@ $breakpoints: variables.$breakpoints;
   font-size: 0.9rem;
   margin: 5px 0 0;
   color: rgb(68, 68, 68);
+}
+
+.forgot {
+  margin-top: 10px;
+  font-family: "Host Grotesk", serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.action {
+  font-size: 0.9rem;
+  font-family: "Host Grotesk", serif;
+  color: black;
+  font-weight: 500;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.no-receive {
+  font-size: 1rem;
+  font-family: "Host Grotesk", serif;
+  color: black;
+  font-weight: 500;
+  text-align: center;
+  margin: 10px 0;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}
+
+.error {
+  font-size: 0.9rem;
+  font-family: "Outfit", sans-serif;
+  color: rgb(217, 105, 105);
 }
