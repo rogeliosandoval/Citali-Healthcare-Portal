@@ -9,15 +9,25 @@ $breakpoints: variables.$breakpoints;
   gap: 100px;
   min-height: 80vh;
   animation: fadeIn 0.2s linear;
+  flex-wrap: wrap;
 
-  @include media('<phone') {
-    justify-content: flex-start;
-    align-items: normal;
+  @include media('<tablet') {
+    gap: 20px;
+    min-height: auto;
+    margin-top: 20px;
   }
 }
 
 .logo {
   max-width: 300px;
+
+  @include media('<tablet') {
+    max-width: 200px;
+  }
+
+  @include media('<phone') {
+    max-width: 180px;
+  }
 }
 
 .form-container {
@@ -73,6 +83,7 @@ $breakpoints: variables.$breakpoints;
 
   @include media('<phone') {
     border-radius: 0;
+    width: 90%;
   }
 }
 

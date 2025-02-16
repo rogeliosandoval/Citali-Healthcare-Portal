@@ -41,3 +41,10 @@ textarea,
 .p-dialog .p-dialog-header .p-dialog-header-icon {
   box-shadow: none;
 }
+
+.top-nav-search {
+  p-iconField input {
+    width: 100%;
+    font-family: "Host Grotesk", serif;
+  }
+}
