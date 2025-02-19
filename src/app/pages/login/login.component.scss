@@ -19,6 +19,7 @@ $breakpoints: variables.$breakpoints;
 }
 
 .logo {
+  height: auto;
   max-width: 300px;
 
   @include media('<tablet') {

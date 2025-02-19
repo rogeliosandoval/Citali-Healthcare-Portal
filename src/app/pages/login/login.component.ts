@@ -1,4 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core'
+import { Router } from '@angular/router'
 import { InputTextModule } from 'primeng/inputtext'
 import { ButtonModule } from 'primeng/button'
 import { PrimeNGConfig } from 'primeng/api'
@@ -8,6 +9,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms'
 import { ProgressSpinnerModule } from 'primeng/progressspinner'
 import { Footer } from '../../components/footer/footer.component'
+import { AuthService } from '../../services/auth.service'
 
 @Component({
   selector: 'chp-login',
@@ -27,7 +29,9 @@ import { Footer } from '../../components/footer/footer.component'
 })
 
 export class Login implements OnInit {
+  public authService = inject(AuthService)
   public sharedService = inject(SharedService)
+  private router = inject(Router)
   public primengConfig = inject(PrimeNGConfig)
   public forgotPassword = signal<boolean>(false)
   public resetLinkSent = signal<boolean>(false)
@@ -43,6 +47,49 @@ export class Login implements OnInit {
 
   ngOnInit(): void {
     this.primengConfig.ripple = true
+  }
+
+  public login(): void {
+    const formData = this.loginForm.value
+    this.sharedService.loading.set(true)
+
+    setTimeout(() => {
+      if (formData.checked?.includes('yes')) {
+        this.authService.loginWithLocalPersistence(formData.email!, formData.password!).subscribe({
+          next: () => {
+            this.sharedService.loading.set(false)
+          },
+          error: err => {
+            if (err.message == 'Firebase: Error (auth/invalid-credential).') {
+              this.errorMessage.set('Wrong email or password. Please try again.')
+            } else {
+              this.errorMessage.set(err.message)
+            }
+            this.sharedService.loading.set(false)
+          },
+          complete: () => {
+            this.router.navigateByUrl('/dashboard')
+          }
+        })
+      } else {
+        this.authService.loginWithSessionPersistence(formData.email!, formData.password!).subscribe({
+          next: () => {
+            this.sharedService.loading.set(false)
+          },
+          error: err => {
+            if (err.message == 'Firebase: Error (auth/invalid-credential).') {
+              this.errorMessage.set('Wrong email or password. Please try again.')
+            } else {
+              this.errorMessage.set(err.message)
+            }
+            this.sharedService.loading.set(false)
+          },
+          complete: () => {
+            this.router.navigateByUrl('/dashboard')
+          }
+        })
+      }
+    }, 2000)
   }
 
   public sendResetLink(): void {
