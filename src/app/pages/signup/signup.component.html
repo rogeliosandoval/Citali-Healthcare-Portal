@@ -1,0 +1,31 @@
+<div class="signup-container">
+  <div class="login-container">
+    <img class="logo" src="assets/portal-logo.webp" alt="logo" width="300" height="190">
+    <div class="form-container">
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="input-container" [class.disabled]="sharedService.loading()">
+          <label for="name">Your Name:</label>
+          <input id="name" type="text" pInputText variant="filled" placeholder="Name" aria-label="your name" formControlName="name" autocomplete="name"/>
+        </div>
+        <div class="input-container" [class.disabled]="sharedService.loading()">
+          <label for="email">Your Email:</label>
+          <input id="email" type="text" pInputText variant="filled" placeholder="Email" aria-label="your email" formControlName="email" autocomplete="email"/>
+        </div>
+        <div class="input-container" [class.disabled]="sharedService.loading()">
+          <label for="password">Password:</label>
+          <p-password inputId="password" [toggleMask]="true" variant="filled" placeholder="Password" feedback="false" ariaLabel="your password" formControlName="password" minlength="4" autocomplete="off"/>
+        </div>
+        <p-button type="submit" label="Register" ariaLabel="register" type="submit" [disabled]="registerForm.invalid || sharedService.loading()"></p-button>
+        @if (sharedService.loading()) {
+          <p-progressSpinner ariaLabel="loading" strokeWidth="4"/>
+        }
+        @if (errorMessage() !== '') {
+          <div class="error" [class.disabled]="sharedService.loading()">
+            {{ errorMessage() }}
+          </div>
+        }
+      </form>
+    </div>
+  </div>
+  <chp-footer/>
+</div>
