@@ -1,0 +1,51 @@
+@if(authService.coreUserData() === null) {
+  Loading...
+} @else {
+  <div class="route-container">
+    <div class="title" [class.disabled]="sharedService.loading()">Account Settings</div>
+    <div class="form-container">
+      <div class="form-label" [class.disabled]="sharedService.loading() || savingChanges()">Profile Info</div>
+      <form [formGroup]="profileForm" [class.disabled]="sharedService.loading() || savingChanges()" (ngSubmit)="saveProfileChanges()">
+        @if (authService.coreUserData()?.avatarUrl) {
+          <div class="avatar-container">
+            <img class="avatar" [src]="authService.coreUserData()?.avatarUrl" alt="avatar">
+            <i class="pi pi-pencil" (click)="triggerAvatarUpload()"></i>
+          </div>
+        } @else {
+          <div class="avatar-container">
+            <img class="avatar" src="assets/default-avatar.png" alt="avatar">
+            <i class="pi pi-pencil" (click)="triggerAvatarUpload()"></i>
+          </div>
+        }
+        <div class="input-container" [class.disabled]="sharedService.loading()">
+          <label for="name">Your Name:</label>
+          <input id="name" type="text" pInputText variant="filled" placeholder="Name" formControlName="name" autocomplete="name"/>
+        </div>
+        <div class="input-container" [class.disabled]="sharedService.loading()">
+          <label for="email">Email:</label>
+          <input id="email" type="text" pInputText variant="filled" placeholder="Email" formControlName="email" autocomplete="email"/>
+        </div>
+        <div class="input-container" [class.disabled]="sharedService.loading()">
+          <label for="position">Position:</label>
+          <input id="position" type="text" pInputText variant="filled" placeholder="Position" formControlName="position" autocomplete="off"/>
+        </div>
+        <div class="input-container" [class.disabled]="sharedService.loading()">
+          <label for="phone">Phone:</label>
+          <input id="phone" type="tel" pInputText variant="filled" placeholder="(xxx) xxx-xxxx" formControlName="phone" phoneNumber minlength="10" autocomplete="tel"/>
+        </div>
+        <div class="input-container" [class.disabled]="sharedService.loading()">
+          <label for="message">Message:</label>
+          <textarea id="message" rows="3" cols="30" pInputTextarea variant="filled" formControlName="message"  placeholder="Message to display on your profile" style="resize: none;" autocomplete="off"></textarea>
+        </div>
+        <div class="button-container">
+          <p-button label="Save Changes" type="submit" [disabled]="!profileForm.dirty || savingChanges()"></p-button>
+          <p-button label="Cancel" severity="secondary" (onClick)="cancelProfileChanges()" [disabled]="!profileForm.dirty || savingChanges()"></p-button>
+        </div>
+      </form>
+      @if (savingChanges()) {
+        <p-progressSpinner ariaLabel="loading" strokeWidth="3"/>
+      }
+    </div>
+    <tcd-avatar-upload #avatarUploadDialog [showUploadAvatarDialog]="this.sharedService.showAvatarUploadDialog()" (onSubmit)="saveAvatar($event)" [dialogLoading]="dialogLoading()" [type]="uploadAvatarType()"/>
+  </div>
+}
