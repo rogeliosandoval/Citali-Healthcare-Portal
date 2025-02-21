@@ -4,8 +4,8 @@ $breakpoints: variables.$breakpoints;
 
 .dashboard-container {
   position: relative;
-  height: 100vh;
   animation: fadeIn 0.2s linear;
+  background-color: rgb(228, 228, 228);
 
   p-progressSpinner {
     position: absolute;
@@ -22,6 +22,7 @@ $breakpoints: variables.$breakpoints;
   align-items: center;
   width: 100%;
   text-align: center;
+  height: 120px;
   transition: 0.1s linear;
   background-color: rgb(48, 29, 67);
 
@@ -48,7 +49,7 @@ $breakpoints: variables.$breakpoints;
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 250px;
+  max-width: 200px;
   padding: 15px;
 
   @media screen and (max-width: 1000px) {
@@ -75,6 +76,29 @@ $breakpoints: variables.$breakpoints;
   @media screen and (max-width: 1000px) {
     padding-top: 10px;
     padding-bottom: 5px;
+  }
+}
+
+.top-nav-avatar__dropdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 5px;
+}
+
+.hamburger-icon,
+.close-icon {
+  display: none;
+
+  @media screen and (max-width: 1000px) {
+    display: inline-block;
+    font-size: 1.5rem;
+    padding: 7px;
+    color: black;
+    border-radius: 5px;
+    margin-left: 20px;
+    background-color: variables.$theme-color-sub;
   }
 }
 
@@ -118,5 +142,104 @@ $breakpoints: variables.$breakpoints;
   align-items: center;
   font-size: 0.7rem;
   font-weight: bold;
+}
+// #endregion
+
+// #region Main Container
+.main-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.side-nav {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: calc(100vh - 120px);
+  width: 70px;
+  background-color: rgb(48, 29, 67);
+  color: white;
+  padding: 1.5rem;
+
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
+}
+
+.side-nav-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+
+  .pi {
+    font-size: 1.8rem;
+
+    &:hover {
+      cursor: pointer;
+      color: variables.$theme-color-sub;
+    }
+  }
+}
+
+.pi-sign-out {
+  margin: 0 auto;
+  font-size: 1.8rem;
+
+  &:hover {
+    cursor: pointer;
+    color: variables.$theme-color-sub;
+  }
+}
+
+.outlet-container {
+  height: calc(100vh - 120px);
+  flex: 2;
+
+  @media screen and (max-width: 1000px) {
+    height: auto;
+  }
+}
+
+.side-nav-mobile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  gap: 25px;
+
+  h3 {
+    font-size: 1.5rem;
+    font-family: "Host Grotesk", serif;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+  }
+}
+
+.mobile-side-nav-links {
+  display: flex;
+  align-items: baseline;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.mobile-side-nav-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  font-family: "Host Grotesk", serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+
+  .pi {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+}
+
+.mobile-active {
+  color: variables.$theme-color-main;
 }
 // #endregion

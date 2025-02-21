@@ -1,20 +1,93 @@
 <div class="dashboard-container">
-  <div class="top-nav">
-    <div class="top-nav-logo">
-      <img class="logo" src="assets/portal-logo.webp" alt="logo" draggable="false">
+  @if (authService.coreUserData() === null) {
+    <p-progressSpinner ariaLabel="loading" strokeWidth="4"/>
+  } @else {
+    <div class="top-nav" [class.disabled]="sharedService.loading()">
+      <div class="top-nav-logo">
+        <img class="logo" src="assets/portal-logo.webp" alt="logo" draggable="false" (click)="test()">
+      </div>
+      <div class="top-nav-search">
+        <p-iconField iconPosition="left">
+          <p-inputIcon styleClass="pi pi-search" />
+          <input name="search" type="text" pInputText placeholder="Search" />
+        </p-iconField>
+      </div>
+      <div class="top-nav-avatar">
+        <div class="top-nav-avatar__dropdown" (click)="menu.toggle($event)">
+          @if (authService.coreUserData()?.avatarUrl) {
+            <img class="avatar" [src]="authService.coreUserData()?.avatarUrl" alt="avatar" width="40" height="40" loading="lazy">
+          } @else {
+            <img class="avatar" src="assets/default-avatar.png" alt="avatar" width="40" height="40" loading="lazy">
+          }
+          <div class="name-arrow">
+            <span>{{ authService.coreUserData()?.name }}</span>
+            <i class="pi pi-chevron-down"></i>
+          </div>
+        </div>
+        @if (sidebarVisible()) {
+          <i class="pi pi-times close-icon"></i>
+        } @else {
+          <i class="pi pi-bars hamburger-icon" (click)="sidebarVisible.set(true)"></i>
+        }
+      </div>
+      <p-menu #menu [model]="items" [popup]="true"/>
     </div>
-    <div class="top-nav-search">
-      <p-iconField iconPosition="left">
-        <p-inputIcon styleClass="pi pi-search" />
-        <input name="search" type="text" pInputText placeholder="Search" />
-      </p-iconField>
-    </div>
-    <div class="top-nav-avatar">
-      <img class="avatar" src="assets/headshot_one.jpeg" alt="avatar">
-      <div class="name-arrow">
-        <span>Roger Sandoval</span>
-        <i class="pi pi-chevron-down"></i>
+  
+    <!--Bottom Part-->
+    <div class="main-container" [class.disabled]="sharedService.loading()">
+      <div class="side-nav">
+        <div class="side-nav-icons">
+          <i class="pi pi-table" pTooltip="Database" tooltipPosition="right" showDelay="500" routerLink="/dashboard"></i>
+          <i class="pi pi-users" pTooltip="Team" tooltipPosition="right" showDelay="500"></i>
+          <i class="pi pi-inbox" pTooltip="Inbox" tooltipPosition="right" showDelay="500" routerLink="/dashboard/inbox"></i>
+          <i class="pi pi-cog" pTooltip="Account Settings" tooltipPosition="right" showDelay="500" routerLink="/dashboard/account-settings"></i>
+        </div>
+        <i class="pi pi-sign-out" pTooltip="Sign Out" tooltipPosition="right" showDelay="500" (click)="confirmSignOff()"></i>
+      </div>
+      <!--Mobile Navbar-->
+      <p-sidebar [(visible)]="sidebarVisible">
+        <div class="side-nav-mobile-container">
+          <h3>{{ authService.coreUserData()?.name }}</h3>
+          <div class="mobile-side-nav-links">
+            <div class="mobile-side-nav-link"
+              routerLink="/dashboard/database"
+              (click)="sidebarVisible.set(false)"
+              [class.mobile-active]="grabRoute() === '/dashboard/database'">
+              <i class="pi pi-chart-pie"></i>
+              <span>Overview</span>
+            </div>
+            <div class="mobile-side-nav-link"
+              routerLink="/dashboard/team"
+              (click)="sidebarVisible.set(false)"
+              [class.mobile-active]="grabRoute() === '/dashboard/team'">
+              <i class="pi pi-users"></i>
+              <span>Clients</span>
+            </div>
+            <div class="mobile-side-nav-link"
+              routerLink="/dashboard/inbox"
+              (click)="sidebarVisible.set(false)"
+              [class.mobile-active]="grabRoute() === '/dashboard/inbox'">
+              <i class="pi pi-face-smile"></i>
+              <span>Team Members</span>
+            </div>
+            <div class="mobile-side-nav-link"
+              routerLink="/dashboard/account-settings"
+              (click)="sidebarVisible.set(false)"
+              [class.mobile-active]="grabRoute() === '/dashboard/account-settings'">
+              <i class="pi pi-money-bill"></i>
+              <span>Profits</span>
+            </div>
+          </div>
+        </div>
+      </p-sidebar>
+      <div class="outlet-container">
+        <router-outlet/>
       </div>
     </div>
-  </div>
+    @if (sharedService.loading()) {
+      <p-progressSpinner ariaLabel="loading" strokeWidth="3"/>
+    }
+  }
+  <p-confirmDialog key="positionDialog" position="bottom-left" rejectButtonStyleClass="p-button-outlined"/>
+  <p-toast position="bottom-right" key="br" [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"/>
 </div>
