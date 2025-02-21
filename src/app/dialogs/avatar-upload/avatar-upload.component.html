@@ -1,0 +1,40 @@
+<p-dialog header="Avatar Upload" [modal]="true" (onHide)="closeDialog()" [(visible)]="showUploadAvatarDialog" [style]="{ width: '20rem' }">
+  <span class="p-text-secondary block mb-5">
+    Upload a profile picture!
+  </span>
+  <div class="avatar-upload-container" style="margin-top: 10px;">
+    @if (showUploadAvatarButton()) {
+      @if (avatarUrl) {
+        <div class="avatar-container" [class.disabled]="dialogLoading()">
+          <img class="avatar-preview" [src]="avatarUrl" alt="avatar image preview">
+          <i class="pi pi-trash" (click)="avatar = null; avatarUrl = null"></i>
+        </div>
+      } @else {
+        <div class="custom-id-input" [class.disabled]="dialogLoading()">
+          <input type="file" id="avatar" accept="image/*" (change)="avatarUpload($event)">
+          <label style="font-size: 0.9rem;" for="avatar"><i class="pi pi-upload"></i>Upload Avatar</label>
+        </div>
+      }
+    } @else {
+      @if (authService.coreUserData()?.avatarUrl) {
+        <div class="avatar-container" [class.disabled]="dialogLoading()">
+          <img class="avatar" [src]="authService.coreUserData()?.avatarUrl" alt="avatar">
+          <i class="pi pi-trash" (click)="showUploadAvatarButton.set(true); avatar = null; avatarUrl = null"></i>
+        </div>
+      } @else {
+        <div class="avatar-container" [class.disabled]="dialogLoading()">
+          <img class="avatar" src="assets/default-avatar.png" alt="avatar">
+          <i class="pi pi-trash" (click)="showUploadAvatarButton.set(true); avatar = null; avatarUrl = null"></i>
+        </div>
+      }
+    }
+    @if (!authService.coreUserData()?.avatarUrl) {
+      <p-button label="{{dialogLoading() ? 'Saving...' : 'Save'}}" (onClick)="submitDialog('profile')" [disabled]="!avatarUrl || dialogLoading()"></p-button>
+    } @else {
+      <p-button label="{{dialogLoading() ? 'Saving...' : 'Save'}}" (onClick)="submitDialog('profile')" [disabled]="!showUploadAvatarButton() || dialogLoading()"></p-button>
+    }
+    @if (dialogLoading()) {
+      <p-progressSpinner ariaLabel="loading" strokeWidth="3"/>
+    }
+  </div>
+</p-dialog>
