@@ -6,4 +6,5 @@ import { Injectable, signal } from '@angular/core'
 
 export class SharedService {
   loading = signal<boolean>(false)
+  showAvatarUploadDialog = signal<boolean>(false)
 }

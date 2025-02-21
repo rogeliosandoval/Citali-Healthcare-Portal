@@ -4,6 +4,7 @@ import { Signup } from './pages/signup/signup.component'
 import { Dashboard } from './pages/dashboard/dashboard.component'
 import { AuthUserGuard } from './guards/auth.user.guard'
 import { AuthNonuserGuard } from './guards/auth.nonuser.guard'
+import { AccountSettings } from './pages/dashboard/account-settings/account-settings.component'
 import { Database } from './pages/dashboard/database/database.component'
 import { Inbox } from './pages/dashboard/inbox/inbox.component'
 
@@ -19,6 +20,7 @@ export const routes: Routes = [
     component: Dashboard,
     canActivate: [AuthUserGuard],
     children: [
+      { path: 'account-settings', component: AccountSettings },
       { path: 'database', component: Database },
       { path: 'inbox', component: Inbox },
       { path: '**', redirectTo: 'database', pathMatch: 'full' }

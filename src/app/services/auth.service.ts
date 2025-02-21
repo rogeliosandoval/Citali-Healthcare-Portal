@@ -3,12 +3,14 @@ import { Auth, UserCredential, browserLocalPersistence, browserSessionPersistenc
 import { doc, Firestore, getDoc } from '@angular/fire/firestore'
 import { Observable, from } from 'rxjs'
 import { UserData } from '../interfaces/user.interface'
+import { Storage, ref, deleteObject } from '@angular/fire/storage'
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
+  storage = inject(Storage)
   firestore = inject(Firestore)
   firebaseAuth = inject(Auth)
   user$ = user(this.firebaseAuth)
@@ -69,6 +71,18 @@ export class AuthService {
       }
     } else {
       this.coreUserData.set(null)
+    }
+  }
+
+  async deleteProfileAvatar(): Promise<void> {
+    const avatarPath = `users/${this.coreUserData()?.uid}/avatar`
+    const avatarRef = ref(this.storage, avatarPath)
+
+    try {
+      await deleteObject(avatarRef)
+      await this.fetchCoreUserData()
+    } catch (error) {
+      console.warn('Avatar not found or already deleted:', error)
     }
   }
 }

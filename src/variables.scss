@@ -4,7 +4,7 @@ $breakpoints: (
   'tablet': 768px,
   'desktop': 1024px
 );
-$theme-color-main: #004aad;
+$theme-color-main: #8200ad;
 $theme-color-sub: #f9e65e;
 
 .phone-break {
@@ -25,8 +25,8 @@ $theme-color-sub: #f9e65e;
 }
 
 .route-container {
-  width: calc(100vw - 280px);
   height: 100%;
+  width: 100%;
   padding: 25px;
   overflow: auto;
   animation: routeAnimation 0.2s linear;
