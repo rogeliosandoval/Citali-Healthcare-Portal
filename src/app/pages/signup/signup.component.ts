@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule, FormControl, FormGroup, Validators } 
 import { AuthService } from '../../services/auth.service'
 import { Footer } from '../../components/footer/footer.component'
 import { lastValueFrom } from 'rxjs'
-import { Firestore, collection, doc, setDoc } from '@angular/fire/firestore'
+import { Firestore, doc, setDoc } from '@angular/fire/firestore'
 import { UserCredential } from '@angular/fire/auth'
 
 @Component({
@@ -19,7 +19,6 @@ import { UserCredential } from '@angular/fire/auth'
   imports: [
     InputTextModule,
     ButtonModule,
-    RouterLink,
     ProgressSpinnerModule,
     PasswordModule,
     FormsModule,
