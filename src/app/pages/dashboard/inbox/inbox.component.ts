@@ -1,11 +1,10 @@
-import { Component } from "@angular/core";
-import { RouterLink } from "@angular/router";
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'chp-inbox',
   standalone: true,
   imports: [
-    RouterLink
+
   ],
   templateUrl: './inbox.component.html',
   styleUrl: './inbox.component.scss'
