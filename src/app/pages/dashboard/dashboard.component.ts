@@ -11,7 +11,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner'
 import { AuthService } from '../../services/auth.service'
 import { SharedService } from '../../services/shared.service'
 import { ToastModule } from 'primeng/toast'
-import { ConfirmationService, MessageService } from 'primeng/api'
+import { ConfirmationService } from 'primeng/api'
 import { ConfirmDialogModule } from 'primeng/confirmdialog'
 import { SidebarModule } from 'primeng/sidebar'
 
@@ -31,8 +31,7 @@ import { SidebarModule } from 'primeng/sidebar'
     SidebarModule
   ],
   providers: [
-    ConfirmationService,
-    MessageService
+    ConfirmationService
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -40,7 +39,6 @@ import { SidebarModule } from 'primeng/sidebar'
 
 export class Dashboard implements OnInit {
   private confirmationService = inject(ConfirmationService)
-  private messageService = inject(MessageService)
   private router = inject(Router)
   public authService = inject(AuthService)
   public sharedService = inject(SharedService)
