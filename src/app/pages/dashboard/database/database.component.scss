@@ -1,3 +1,7 @@
-h1 {
-  color: red;
+@use '../../../../variables.scss' as variables;
+$breakpoints: variables.$breakpoints;
+@import 'include-media';
+
+.route-container {
+  padding: 0;
 }
