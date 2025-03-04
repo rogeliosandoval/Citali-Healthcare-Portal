@@ -11,9 +11,11 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner'
 import { AuthService } from '../../services/auth.service'
 import { SharedService } from '../../services/shared.service'
 import { ToastModule } from 'primeng/toast'
-import { ConfirmationService } from 'primeng/api'
+import { ConfirmationService, MessageService } from 'primeng/api'
 import { ConfirmDialogModule } from 'primeng/confirmdialog'
 import { SidebarModule } from 'primeng/sidebar'
+import { Firestore, addDoc, collection, doc, setDoc } from '@angular/fire/firestore'
+import { NgOptimizedImage } from '@angular/common'
 
 @Component({
   selector: 'chp-dashboard',
@@ -28,17 +30,21 @@ import { SidebarModule } from 'primeng/sidebar'
     ProgressSpinnerModule,
     ToastModule,
     ConfirmDialogModule,
-    SidebarModule
+    SidebarModule,
+    NgOptimizedImage
   ],
   providers: [
-    ConfirmationService
+    ConfirmationService,
+    MessageService
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
 
 export class Dashboard implements OnInit {
+  private firestore = inject(Firestore)
   private confirmationService = inject(ConfirmationService)
+  private messageService = inject(MessageService)
   private router = inject(Router)
   public authService = inject(AuthService)
   public sharedService = inject(SharedService)
@@ -81,9 +87,40 @@ export class Dashboard implements OnInit {
     })
   }
 
-  public test(): void {
-    console.log(this.authService.coreUserData())
-  }
+  public async test(): Promise<void> {
+    const dataRef = doc(this.firestore, `data/spinal cord injury`);
+    const diseaseProcessCollection = collection(dataRef, 'disease process');
+  
+    // List of document names you want to create
+    const documentNames = [
+      'Spondylotic Myelopathy',
+      'Brown-Sequard`s Paralysis',
+      'Intervertebral disc disorder with myelopathy',
+      'Diplegia',
+      'Anterior or Posterior Cord Syndrome',
+      'Conus Medullaris Syndrome',
+      'Dislocations of cervical, lumbar, or vertebra with spinal cord involvement',
+      'Intraspinal-Epidural Abscess',
+      'Quadriplegia',
+      'Paraplegia',
+      'Diplegia'
+    ];
+  
+    try {
+      // Create an array of promises
+      const createDocsPromises = documentNames.map(docName => {
+        const subDocRef = doc(diseaseProcessCollection, docName);
+        return setDoc(subDocRef, {}); // Create an empty document
+      });
+  
+      // Execute all Firestore operations in parallel
+      await Promise.all(createDocsPromises);
+  
+      console.log('All documents successfully created!');
+    } catch (error) {
+      console.error('Error creating documents:', error);
+    }
+  }  
 
   public signOff(): void {
     this.sharedService.loading.set(true)

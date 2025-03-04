@@ -4,6 +4,7 @@ $breakpoints: variables.$breakpoints;
 
 .dashboard-container {
   position: relative;
+  height: 100vh;
   animation: fadeIn 0.2s linear;
   background-color: rgb(228, 228, 228);
 
@@ -31,7 +32,6 @@ $breakpoints: variables.$breakpoints;
     justify-content: center;
     align-items: center;
     height: auto;
-    padding-bottom: 10px;
     gap: 5px;
   }
 }
@@ -80,6 +80,7 @@ $breakpoints: variables.$breakpoints;
 }
 
 .top-nav-avatar__dropdown {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -150,6 +151,10 @@ $breakpoints: variables.$breakpoints;
   display: flex;
   justify-content: center;
   width: 100%;
+
+  @media screen and (max-width: 1000px) {
+    display: block;
+  }
 }
 
 .side-nav {
@@ -176,10 +181,12 @@ $breakpoints: variables.$breakpoints;
 
   .pi {
     font-size: 1.8rem;
+    transition: 0.1s linear;
 
     &:hover {
       cursor: pointer;
-      color: variables.$theme-color-sub;
+      // color: variables.$theme-color-sub;
+      transform: scale(1.2);
     }
   }
 }
@@ -187,10 +194,12 @@ $breakpoints: variables.$breakpoints;
 .pi-sign-out {
   margin: 0 auto;
   font-size: 1.8rem;
+  transition: 0.1s linear;
 
   &:hover {
     cursor: pointer;
-    color: variables.$theme-color-sub;
+    // color: variables.$theme-color-sub;
+    transform: scale(1.2);
   }
 }
 
@@ -237,6 +246,10 @@ $breakpoints: variables.$breakpoints;
     font-size: 1.3rem;
     font-weight: 600;
   }
+}
+
+.active {
+  color: variables.$theme-color-sub;
 }
 
 .mobile-active {

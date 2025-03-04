@@ -15,9 +15,11 @@
       <div class="top-nav-avatar">
         <div class="top-nav-avatar__dropdown" (click)="menu.toggle($event)">
           @if (authService.coreUserData()?.avatarUrl) {
-            <img class="avatar" [src]="authService.coreUserData()?.avatarUrl" alt="avatar" width="40" height="40" loading="lazy">
+            <div style="position: relative; height: 55px; width: 55px;">
+              <img class="avatar" [ngSrc]="authService.coreUserData()?.avatarUrl || 'assets/default-avatar.png'" alt="avatar" fill priority>
+            </div>
           } @else {
-            <img class="avatar" src="assets/default-avatar.png" alt="avatar" width="40" height="40" loading="lazy">
+            <img class="avatar" ngSrc="assets/default-avatar.png" alt="avatar" width="55" height="55" loading="lazy">
           }
           <div class="name-arrow">
             <span>{{ authService.coreUserData()?.name }}</span>
@@ -37,10 +39,10 @@
     <div class="main-container" [class.disabled]="sharedService.loading()">
       <div class="side-nav">
         <div class="side-nav-icons">
-          <i class="pi pi-table" pTooltip="Database" tooltipPosition="right" showDelay="500" routerLink="/dashboard"></i>
-          <i class="pi pi-users" pTooltip="Team" tooltipPosition="right" showDelay="500"></i>
-          <i class="pi pi-inbox" pTooltip="Inbox" tooltipPosition="right" showDelay="500" routerLink="/dashboard/inbox"></i>
-          <i class="pi pi-cog" pTooltip="Account Settings" tooltipPosition="right" showDelay="500" routerLink="/dashboard/account-settings"></i>
+          <i class="pi pi-table" pTooltip="Database" tooltipPosition="right" showDelay="500" routerLink="/dashboard" [class.active]="grabRoute() === '/dashboard/database'"></i>
+          <i class="pi pi-users" pTooltip="Team" tooltipPosition="right" showDelay="500" [class.active]="grabRoute() === '/dashboard/team-members'"></i>
+          <i class="pi pi-inbox" pTooltip="Inbox" tooltipPosition="right" showDelay="500" routerLink="/dashboard/inbox" [class.active]="grabRoute() === '/dashboard/inbox'"></i>
+          <i class="pi pi-cog" pTooltip="Account Settings" tooltipPosition="right" showDelay="500" routerLink="/dashboard/account-settings" [class.active]="grabRoute() === '/dashboard/account-settings'"></i>
         </div>
         <i class="pi pi-sign-out" pTooltip="Sign Out" tooltipPosition="right" showDelay="500" (click)="confirmSignOff()"></i>
       </div>
@@ -53,29 +55,29 @@
               routerLink="/dashboard/database"
               (click)="sidebarVisible.set(false)"
               [class.mobile-active]="grabRoute() === '/dashboard/database'">
-              <i class="pi pi-chart-pie"></i>
-              <span>Overview</span>
+              <i class="pi pi-table"></i>
+              <span>Database</span>
             </div>
             <div class="mobile-side-nav-link"
               routerLink="/dashboard/team"
               (click)="sidebarVisible.set(false)"
               [class.mobile-active]="grabRoute() === '/dashboard/team'">
               <i class="pi pi-users"></i>
-              <span>Clients</span>
+              <span>Team Members</span>
             </div>
             <div class="mobile-side-nav-link"
               routerLink="/dashboard/inbox"
               (click)="sidebarVisible.set(false)"
               [class.mobile-active]="grabRoute() === '/dashboard/inbox'">
-              <i class="pi pi-face-smile"></i>
-              <span>Team Members</span>
+              <i class="pi pi-inbox"></i>
+              <span>Inbox</span>
             </div>
             <div class="mobile-side-nav-link"
               routerLink="/dashboard/account-settings"
               (click)="sidebarVisible.set(false)"
               [class.mobile-active]="grabRoute() === '/dashboard/account-settings'">
-              <i class="pi pi-money-bill"></i>
-              <span>Profits</span>
+              <i class="pi pi-cog"></i>
+              <span>Account Settings</span>
             </div>
           </div>
         </div>
