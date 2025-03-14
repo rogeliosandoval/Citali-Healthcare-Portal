@@ -29,7 +29,7 @@ $theme-color-sub: #f9e65e;
   width: 100%;
   padding: 25px;
   overflow: auto;
-  animation: routeAnimation 0.2s linear;
+  animation: fadeIn 0.1s linear;
 
   @media screen and (max-width: 1000px) {
     min-height: calc(100vh - 221px);
@@ -57,7 +57,7 @@ $theme-color-sub: #f9e65e;
   100% { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes routeAnimation {
-  0% { opacity: 0; transform: scale(0.8) }
-  100% { opacity: 1; transform:scale(1) }
-}
+// @keyframes routeAnimation {
+//   0% { opacity: 0; transform: scale(0.8) }
+//   100% { opacity: 1; transform:scale(1) }
+// }

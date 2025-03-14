@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core'
 import { Auth, UserCredential, browserLocalPersistence, browserSessionPersistence, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile, user } from '@angular/fire/auth'
-import { doc, Firestore, getDoc } from '@angular/fire/firestore'
+import { collection, doc, Firestore, getDoc, getDocs } from '@angular/fire/firestore'
 import { Observable, from } from 'rxjs'
 import { UserData } from '../interfaces/user.interface'
 import { Storage, ref, deleteObject } from '@angular/fire/storage'
@@ -16,6 +16,9 @@ export class AuthService {
   user$ = user(this.firebaseAuth)
   currentUserSignal = signal<any>(undefined)
   coreUserData = signal<UserData | null>(null)
+  dataCMS = signal<any>([])
+  dots = signal<any>(null)
+
 
   register(email: string, username: string, password: string): Observable<UserCredential> {
     const promise = this.firebaseAuth.setPersistence(browserSessionPersistence)
@@ -83,6 +86,37 @@ export class AuthService {
       await this.fetchCoreUserData()
     } catch (error) {
       console.warn('Avatar not found or already deleted:', error)
+    }
+  }
+
+  public async fetchDots(): Promise<void> {
+    try {
+      const dotsCollectionRef = collection(this.firestore, 'dots')
+      const dotsSnapshot = await getDocs(dotsCollectionRef)
+      // Fetch all dots
+      const dots = await Promise.all(
+        dotsSnapshot.docs.map(async (dotDoc) => {
+          const dotData = dotDoc.data() // Main document data
+          const phrasesCollectionRef = collection(dotDoc.ref, 'phrases')
+          const phrasesSnapshot = await getDocs(phrasesCollectionRef)
+  
+          // Fetch all phrases for this dot
+          const phrases = phrasesSnapshot.docs.map(phrasesDoc => ({
+            id: phrasesDoc.id,
+            ...phrasesDoc.data()
+          }))
+  
+          return {
+            id: dotDoc.id,
+            ...dotData,
+            phrases
+          }
+        })
+      )
+      this.dots.set(dots)
+    } catch (error) {
+      console.error('Error fetching dots', error)
+      this.dots.set([])
     }
   }
 }
